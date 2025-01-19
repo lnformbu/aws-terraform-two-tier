@@ -226,7 +226,7 @@ This achievement brings you one step closer to mastering AWS resource management
 
 ---
 
-## Proceed with Terraform Cleanup
+## Proceed with Terraform Destroy
 
 If all the verification steps above are confirmed and everything looks good, you can now run Terraform to delete all resources:
 
