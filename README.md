@@ -1,6 +1,6 @@
-# **What is AWS 2tier Architecture?**  
+# **How I Deployed a Two-Tier Architecture in AWS Using Terraform**
 
-AWS **Two-Tier Architecture** is a common setup for web applications in the cloud. It consists of two main layers:  
+AWS **Two-Tier Architecture** is a widely used deployment pattern for web applications in the cloud. It comprises two primary components or tiers:
 
 ## **1. Web Server Tier (Frontend)**  
 
