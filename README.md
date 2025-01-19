@@ -1,2 +1,159 @@
-# aws-terraform-two-tier
-Terraform-based deployment of a two-tier architecture in AWS. This repository contains Terraform scripts to provision a scalable two-tier infrastructure in AWS, including a VPC, subnets, security groups, an application layer (EC2), and a database layer (RDS).
+# **What is AWS 2tier Architecture?**  
+
+AWS **Two-Tier Architecture** is a common setup for web applications in the cloud. It consists of two main layers:  
+
+## **1. Web Server Tier (Frontend)**  
+
+Handles user requests and serves web pages. It includes: 
+
+- **Load Balancers:** Distribute traffic across multiple servers for better performance and availability. AWS offers **Application Load Balancers** and **Network Load Balancers**.
+
+- **Web Servers:** Deliver web content (HTML, CSS, JavaScript) and run dynamic applications (PHP, Python, Ruby, etc.).  
+
+## **2. Database Tier (Backend)**  
+
+Stores and manages application data. It includes:  
+- **Database Server:** Hosts data, with AWS options like **RDS, DynamoDB,** and **Aurora**.
+
+- **Storage:** Keeps the data using **EBS, S3,** or **EFS**.  
+
+A **firewall (security group)** separates the two tiers, blocking direct internet access to the database for security. This design improves **scalability, security, and reliability**.  
+
+---
+
+## **Why Use Two-Tier Architecture?**  
+
+- **Scalability:** Web and database layers scale independently—add more servers when needed.  
+- **Fault Tolerance:** Multiple instances prevent failures from taking down the application.  
+- **Security:** The database is isolated and only accessible by authorized sources.  
+- **Performance:** Load balancers ensure smooth traffic distribution.  
+
+This setup is **flexible, secure, and optimized for cloud deployments**.  
+
+---
+
+## **Two-Tier vs. Three-Tier Architecture**  
+
+| Architecture  | Description |
+|--------------|------------|
+| **Two-Tier**  | Client (web) layer communicates **directly** with the database. |
+| **Three-Tier** | Adds an **application layer** in between, improving security, scalability, and maintainability. |
+
+Three-tier architecture is better for large applications but more complex and costly to set up.  
+
+---
+
+## **Deploying AWS Two-Tier Architecture with Terraform**  
+
+We'll use **Terraform** (an **Infrastructure as Code** tool) to automate the setup:  
+
+1. **Create a VPC** with public and private subnets.  
+2. **Deploy an EC2 instance** (web server) in the public subnet.  
+3. **Launch an RDS database** in the private subnet.  
+4. **Configure security groups** to allow secure access.  
+
+Terraform makes cloud deployments **fast, repeatable, and efficient** by defining resources in code.  
+
+Let’s build a Two-Tier AWS setup with Terraform.  
+
+![text](img/2tier.png)
+
+# **AWS Two-Tier Architecture Components**
+
+This two-tier architecture consists of the following components:
+
+- **VPC:** A Virtual Private Cloud with CIDR `10.0.0.0/16`.  
+- **Public Subnets:** Two subnets (`10.0.0.0/18` and `10.0.64.0/18`), each in a different Availability Zone for high availability.  
+- **Private Subnets:** Two subnets (`10.0.128.0/18` and `10.0.192.0/18`), each in a different Availability Zone.  
+- **Database Layer:** An **RDS MySQL instance** deployed in a private subnet.  
+- **Application Layer:** An **Application Load Balancer (ALB)** to distribute traffic across public subnets.  
+- **Compute Layer:** One **EC2 instance** in each public subnet to ensure high availability.  
+- **Networking:** An **Internet Gateway** and **Elastic IPs** for public-facing EC2 instances.  
+
+---
+
+## **Prerequisites**  
+
+Before deploying the infrastructure, ensure you have the following:  
+
+- **Terraform CLI** installed  
+- **AWS CLI** configured with credentials  
+- An **AWS Account**  
+- A **Code Editor** (e.g., Visual Studio Code)  
+- **Terraform Registry Reference:** [Terraform AWS Modules](https://registry.terraform.io/)  
+- **Terraform Cloud Account** for backend state management.
+
+---
+
+## **Next Steps**  
+
+With these components in place, we will use **Terraform** to automate the deployment of this two-tier architecture in AWS. Let’s begin!  
+
+**Create the following files within your repository to define and manage the AWS two-tier architecture:**
+
+- `provider.tf` – Defines the AWS provider and required configurations.  
+- `network.tf` – Sets up the VPC, subnets, and networking components.  
+- `compute.tf` – Configures EC2 instances for the application layer.  
+- `database.tf` – Provisions an RDS database for persistent storage.  
+- `security.tf` – Defines security groups and access controls.  
+
+>> The required terraform configuration for each file can be found in the `terraform` directory.
+
+
+# **Deploying Your Infrastructure**
+
+Before proceeding, ensure that your AWS credentials are correctly configured and that you're working from the root directory of your Terraform project.  
+
+## **Step 1: Initialize Terraform**  
+
+To set up your Terraform environment, run:
+
+```bash
+terraform init
+```
+
+![alt text](img/tfi.png)
+
+ **What Happens When You Run `terraform init`?**  
+
+- **Downloads Provider Plugins** – Ensures Terraform has the necessary AWS provider and any other dependencies.  
+- **Sets Up the Backend** – Configures where Terraform will store its state, such as Terraform Cloud or an S3 bucket.  
+- **Prepares the Workspace** – Initializes the directory, making it ready for Terraform operations.  
+
+Once the initialization is complete, you can proceed with planning and deploying your infrastructure.  
+
+## **Step 2: Preview the Execution Plan**  
+
+Before applying changes, it's best to see what Terraform intends to do. Run:  
+
+```bash
+terraform plan
+```
+
+![alt text](img/tfp.png)
+
+![alt text](img/tfc.png)
+
+**What Happens When You Run `terraform plan`?**  
+
+- **Validates the Configuration** – Scans your Terraform files for syntax errors and missing variables.  
+- **Identifies Changes** – Compares the current state with the desired state and lists what Terraform will add, modify, or remove.  
+- **Provides a Safe Preview** – Displays the expected changes without actually making any modifications to your infrastructure.  
+
+Carefully review the output to confirm that the planned actions align with your expectations before applying the changes.  
+
+## **Step 3: Apply the Configuration**  
+
+Once you've reviewed the plan and confirmed the changes, apply the configuration with:  
+
+```bash
+terraform apply
+```
+
+**What Happens When You Run `terraform apply`?**  
+
+- **Provisions Infrastructure** – Deploys new resources according to the Terraform configuration.  
+- **Updates Existing Resources** – Adjusts any infrastructure that requires modifications to match the desired state.  
+- **Executes the Approved Plan** – Ensures only the changes reviewed in `terraform plan` are applied.  
+
+Terraform may ask for confirmation before proceeding. Type **`yes`** to finalize the deployment.  
