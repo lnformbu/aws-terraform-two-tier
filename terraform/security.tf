@@ -16,7 +16,8 @@ resource "aws_security_group" "lenon-2-tier-ec2-sg" {
     from_port   = "80"
     to_port     = "80"
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.lenon-2-tier-alb-sg.id]  #Allow only from ALB SG
+    # cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port   = "22"

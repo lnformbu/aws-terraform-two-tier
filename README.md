@@ -157,3 +157,41 @@ terraform apply
 - **Executes the Approved Plan** – Ensures only the changes reviewed in `terraform plan` are applied.  
 
 Terraform may ask for confirmation before proceeding. Type **`yes`** to finalize the deployment.  
+
+---
+
+# Verification Steps in AWS Console
+
+To confirm that your VPC and network resources are correctly configured, follow these steps:
+
+## 1. Verify VPC and Subnets
+
+- Go to **AWS Console → VPC Dashboard**
+  - Check if the VPC (`lenon-2-tier-vpc`) exists.
+  - Ensure that both public and private subnets are created.
+
+## 2. Check Subnet Association
+
+- Go to **AWS Console → RDS → Subnet Groups**
+  - Look for `lenon-2-tier-db-sub`.
+  - Ensure it has two private subnets (`lenon-2-tier-pvt-sub-1` & `lenon-2-tier-pvt-sub-2`).
+
+## 3. Verify Route Table and Internet Gateway
+
+- Go to **AWS Console → VPC → Route Tables**
+  - Ensure public subnets are associated with a route table that has a route to the Internet Gateway (`lenon-2-tier-igw`).
+  - Private subnets should not have direct internet access.
+
+## 4. Check Security Groups
+
+- Go to **AWS Console → EC2 → Security Groups**
+  - Ensure that:
+    - `lenon-2-tier-ec2-sg` allows inbound **HTTP (80)** and **SSH (22)** traffic.
+    - `lenon-2-tier-db-sg` allows **MySQL (3306)** connections only from EC2 instances inside the VPC.
+
+## 5. Confirm DB Parameter Group
+
+- Go to **AWS Console → RDS → Parameter Groups**
+  - If using `default.mysql5.7`, check if it exists.
+  - If using a custom parameter group, ensure it’s created and assigned to the RDS instance.
+
