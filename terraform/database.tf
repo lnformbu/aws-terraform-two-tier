@@ -3,11 +3,11 @@ resource "aws_db_instance" "lenon-2-tier-db-1" {
   allocated_storage           = 5
   storage_type                = "gp2"
   engine                      = "mysql"
-  engine_version              = "5.7"
-  instance_class              = "db.t2.micro"
+  engine_version              = "8.0"
+  instance_class              = "db.t3.micro"
   db_subnet_group_name        = "lenon-2-tier-db-sub"
   vpc_security_group_ids      = [aws_security_group.lenon-2-tier-db-sg.id]
-  parameter_group_name        = "default.mysql5.7"
+  parameter_group_name        = "default.mysql8.0"
   db_name                     = "two_tier_db1"
   username                    = "admin"
   password                    = "password"
