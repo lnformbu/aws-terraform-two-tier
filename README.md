@@ -158,40 +158,56 @@ terraform apply
 
 Terraform may ask for confirmation before proceeding. Type **`yes`** to finalize the deployment.  
 
+![alt text](img/tfa.png)
+
+
+![alt text](img/tfa1.png)
+
 ---
 
-# Verification Steps in AWS Console
+# Let's Verify All Resources Are Created Using the AWS Console
 
-To confirm that your VPC and network resources are correctly configured, follow these steps:
+To ensure that all AWS resources are properly created, follow these verification steps:
 
 ## 1. Verify VPC and Subnets
 
 - Go to **AWS Console → VPC Dashboard**
-  - Check if the VPC (`lenon-2-tier-vpc`) exists.
-  - Ensure that both public and private subnets are created.
+  - Confirm that the VPC (`lenon-2-tier-vpc`) exists.
+  - Ensure both public and private subnets are created.
 
 ## 2. Check Subnet Association
 
 - Go to **AWS Console → RDS → Subnet Groups**
   - Look for `lenon-2-tier-db-sub`.
-  - Ensure it has two private subnets (`lenon-2-tier-pvt-sub-1` & `lenon-2-tier-pvt-sub-2`).
+  - Verify that it includes two private subnets: `lenon-2-tier-pvt-sub-1` & `lenon-2-tier-pvt-sub-2`.
 
 ## 3. Verify Route Table and Internet Gateway
 
 - Go to **AWS Console → VPC → Route Tables**
-  - Ensure public subnets are associated with a route table that has a route to the Internet Gateway (`lenon-2-tier-igw`).
+  - Ensure public subnets are associated with a route table that includes a route to the Internet Gateway (`lenon-2-tier-igw`).
   - Private subnets should not have direct internet access.
 
 ## 4. Check Security Groups
 
 - Go to **AWS Console → EC2 → Security Groups**
-  - Ensure that:
+  - Verify that:
     - `lenon-2-tier-ec2-sg` allows inbound **HTTP (80)** and **SSH (22)** traffic.
     - `lenon-2-tier-db-sg` allows **MySQL (3306)** connections only from EC2 instances inside the VPC.
 
 ## 5. Confirm DB Parameter Group
 
 - Go to **AWS Console → RDS → Parameter Groups**
-  - If using `default.mysql5.7`, check if it exists.
-  - If using a custom parameter group, ensure it’s created and assigned to the RDS instance.
+  - If using `default.mysql5.7`, ensure it exists.
+  - If using a custom parameter group, verify it is created and assigned to the RDS instance.
 
+---
+
+## Proceed with Terraform Cleanup
+
+If all the verification steps above are confirmed and everything looks good, you can now run Terraform to delete all resources:
+
+```bash
+terraform destroy -auto-approve
+```
+
+![alt text](img/tfd.png)
