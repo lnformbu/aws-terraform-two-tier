@@ -1,10 +1,10 @@
 # Security Group
-resource "aws_security_group" "Lenon-2-tier-ec2-sg" {
-  name        = "Lenon-2-tier-ec2-sg"
+resource "aws_security_group" "lenon-2-tier-ec2-sg" {
+  name        = "lenon-2-tier-ec2-sg"
   description = "Allow traffic from VPC"
-  vpc_id      = aws_vpc.Lenon-2-tier-vpc.id
+  vpc_id      = aws_vpc.lenon-2-tier-vpc.id
   depends_on = [
-    aws_vpc.Lenon-2-tier-vpc
+    aws_vpc.lenon-2-tier-vpc
   ]
 
   ingress {
@@ -32,17 +32,17 @@ resource "aws_security_group" "Lenon-2-tier-ec2-sg" {
   }
 
   tags = {
-    Name = "Lenon-2-tier-ec2-sg"
+    Name = "lenon-2-tier-ec2-sg"
   }
 }
 
 # Load balancer security group
-resource "aws_security_group" "Lenon-2-tier-alb-sg" {
-  name        = "Lenon-2-tier-alb-sg"
+resource "aws_security_group" "lenon-2-tier-alb-sg" {
+  name        = "lenon-2-tier-alb-sg"
   description = "load balancer security group"
-  vpc_id      = aws_vpc.Lenon-2-tier-vpc.id
+  vpc_id      = aws_vpc.lenon-2-tier-vpc.id
   depends_on = [
-    aws_vpc.Lenon-2-tier-vpc
+    aws_vpc.lenon-2-tier-vpc
   ]
 
 
@@ -61,21 +61,21 @@ resource "aws_security_group" "Lenon-2-tier-alb-sg" {
 
 
   tags = {
-    Name = "Lenon-2-tier-alb-sg"
+    Name = "lenon-2-tier-alb-sg"
   }
 }
 
 # Database tier Security gruop
-resource "aws_security_group" "Lenon-2-tier-db-sg" {
-  name        = "Lenon-2-tier-db-sg"
+resource "aws_security_group" "lenon-2-tier-db-sg" {
+  name        = "lenon-2-tier-db-sg"
   description = "allow traffic from internet"
-  vpc_id      = aws_vpc.Lenon-2-tier-vpc.id
+  vpc_id      = aws_vpc.lenon-2-tier-vpc.id
 
   ingress {
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
-    security_groups = [aws_security_group.Lenon-2-tier-ec2-sg.id]
+    security_groups = [aws_security_group.lenon-2-tier-ec2-sg.id]
     cidr_blocks     = ["0.0.0.0/0"]
   }
 
@@ -83,7 +83,7 @@ resource "aws_security_group" "Lenon-2-tier-db-sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.Lenon-2-tier-ec2-sg.id]
+    security_groups = [aws_security_group.lenon-2-tier-ec2-sg.id]
     cidr_blocks     = ["10.0.0.0/16"]
   }
 

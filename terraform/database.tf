@@ -1,12 +1,12 @@
 # RDS MYSQL database
-resource "aws_db_instance" "Lenon-2-tier-db-1" {
+resource "aws_db_instance" "lenon-2-tier-db-1" {
   allocated_storage           = 5
   storage_type                = "gp2"
   engine                      = "mysql"
   engine_version              = "5.7"
   instance_class              = "db.t2.micro"
-  db_subnet_group_name        = "Lenon-2-tier-db-sub"
-  vpc_security_group_ids      = [aws_security_group.Lenon-2-tier-db-sg.id]
+  db_subnet_group_name        = "lenon-2-tier-db-sub"
+  vpc_security_group_ids      = [aws_security_group.lenon-2-tier-db-sg.id]
   parameter_group_name        = "default.mysql5.7"
   db_name                     = "two_tier_db1"
   username                    = "admin"
@@ -18,4 +18,6 @@ resource "aws_db_instance" "Lenon-2-tier-db-1" {
   maintenance_window          = "Sat:00:00-Sat:03:00"
   multi_az                    = false
   skip_final_snapshot         = true
+
+  depends_on = [aws_db_subnet_group.lenon-2-tier-db-sub]  # ensure DB subnet group exists first
 }
