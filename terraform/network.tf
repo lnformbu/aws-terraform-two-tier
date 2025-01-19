@@ -8,9 +8,9 @@ resource "aws_vpc" "lenon-2-tier-vpc" {
 
 # Public Subnets 
 resource "aws_subnet" "lenon-2-tier-pub-sub-1" {
-  vpc_id            = aws_vpc.lenon-2-tier-vpc.id
-  cidr_block        = "10.0.0.0/18"
-  availability_zone = "us-east-1a"
+  vpc_id                  = aws_vpc.lenon-2-tier-vpc.id
+  cidr_block              = "10.0.0.0/18"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = "true"
 
   tags = {
@@ -19,9 +19,9 @@ resource "aws_subnet" "lenon-2-tier-pub-sub-1" {
 }
 
 resource "aws_subnet" "lenon-2-tier-pub-sub-2" {
-  vpc_id            = aws_vpc.lenon-2-tier-vpc.id
-  cidr_block        = "10.0.64.0/18"
-  availability_zone = "us-east-1b"
+  vpc_id                  = aws_vpc.lenon-2-tier-vpc.id
+  cidr_block              = "10.0.64.0/18"
+  availability_zone       = "us-east-1b"
   map_public_ip_on_launch = "true"
   tags = {
     Name = "lenon-2-tier-pub-sub-2"
@@ -118,7 +118,7 @@ resource "aws_lb_target_group" "lenon-2-tier-loadb_target" {
   port       = "80"
   protocol   = "HTTP"
   vpc_id     = aws_vpc.lenon-2-tier-vpc.id
-  
+
 }
 
 resource "aws_lb_target_group_attachment" "lenon-2-tier-tg-attch-1" {

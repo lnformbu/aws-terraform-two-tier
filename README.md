@@ -160,12 +160,13 @@ Terraform may ask for confirmation before proceeding. Type **`yes`** to finalize
 
 ![alt text](img/tfa.png)
 
+ > `Terraform cloud` 
 
 ![alt text](img/tfa1.png)
 
 ---
 
-# Let's Verify All Resources Are Created Using the AWS Console
+# Verify All Resources Are Created In The AWS Console
 
 To ensure that all AWS resources are properly created, follow these verification steps:
 
@@ -174,31 +175,54 @@ To ensure that all AWS resources are properly created, follow these verification
 - Go to **AWS Console → VPC Dashboard**
   - Confirm that the VPC (`lenon-2-tier-vpc`) exists.
   - Ensure both public and private subnets are created.
+  ![alt text](img/c1.png)
 
 ## 2. Check Subnet Association
 
 - Go to **AWS Console → RDS → Subnet Groups**
   - Look for `lenon-2-tier-db-sub`.
   - Verify that it includes two private subnets: `lenon-2-tier-pvt-sub-1` & `lenon-2-tier-pvt-sub-2`.
+  ![alt text](img/c2.png)
 
 ## 3. Verify Route Table and Internet Gateway
 
 - Go to **AWS Console → VPC → Route Tables**
   - Ensure public subnets are associated with a route table that includes a route to the Internet Gateway (`lenon-2-tier-igw`).
   - Private subnets should not have direct internet access.
+  ![alt text](img/c3.png)
 
 ## 4. Check Security Groups
 
 - Go to **AWS Console → EC2 → Security Groups**
   - Verify that:
     - `lenon-2-tier-ec2-sg` allows inbound **HTTP (80)** and **SSH (22)** traffic.
+    ![alt text](img/c4.png)
     - `lenon-2-tier-db-sg` allows **MySQL (3306)** connections only from EC2 instances inside the VPC.
+    ![alt text](img/c5.png)
 
 ## 5. Confirm DB Parameter Group
 
 - Go to **AWS Console → RDS → Parameter Groups**
   - If using `default.mysql5.7`, ensure it exists.
+  ![alt text](img/c6.png)
   - If using a custom parameter group, verify it is created and assigned to the RDS instance.
+
+---
+
+# 🎉 Congratulations on Completing the Lab! 🎉
+
+
+Great job! You have successfully completed the lab and verified that all AWS resources were created correctly. This hands-on experience has strengthened your understanding of AWS infrastructure, networking, and security configurations.
+
+By completing this lab, you have:
+
+✅ Created and validated a multi-tier VPC setup.  
+✅ Ensured proper subnet associations for RDS.  
+✅ Verified route tables and internet gateway configurations.  
+✅ Checked security group rules for EC2 and RDS.  
+✅ Confirmed database parameter group settings.
+
+This achievement brings you one step closer to mastering AWS resource management and Terraform automation. Keep up the great work, and continue experimenting with AWS to deepen your expertise!
 
 ---
 

@@ -19,5 +19,5 @@ resource "aws_db_instance" "lenon-2-tier-db-1" {
   multi_az                    = false
   skip_final_snapshot         = true
 
-  depends_on = [aws_db_subnet_group.lenon-2-tier-db-sub]  # ensure DB subnet group exists first
+  depends_on = [aws_db_subnet_group.lenon-2-tier-db-sub] # ensure DB subnet group exists first
 }

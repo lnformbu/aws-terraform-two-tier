@@ -13,10 +13,10 @@ resource "aws_security_group" "lenon-2-tier-ec2-sg" {
     protocol  = "-1"
   }
   ingress {
-    from_port   = "80"
-    to_port     = "80"
-    protocol    = "tcp"
-    security_groups = [aws_security_group.lenon-2-tier-alb-sg.id]  #Allow only from ALB SG
+    from_port       = "80"
+    to_port         = "80"
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lenon-2-tier-alb-sg.id] #Allow only from ALB SG
     # cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
